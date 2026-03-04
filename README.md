@@ -68,33 +68,9 @@ Always branch off `master`. Use this format:
 ```
 <type>/<issue-number>-<short-description>
 `
-**Examples:**
 
 ```
-feat/1-home-page
-fix/7-oauth-redirect-loop
-docs/update-readme
-style/3-committees-responsive
-```
 
-## Commit Messages
-
-Follow [Conventional Commits](https://www.conventionalcommits.org/):
-
-```
-<type>(scope): short description
-```
-
-**Examples:**
-
-```
-feat(home): add animated stat counters
-fix(auth): handle expired refresh tokens
-docs: update API route reference
-style(events): fix mobile card layout
-```
-
-Keep commits atomic — one logical change per commit.
 
 ## Pull Request Workflow
 
