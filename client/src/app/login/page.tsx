@@ -1,31 +1,34 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router';
+'use client';
+
+import { useState } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { motion } from 'motion/react';
-import { Mail, Lock, User, Chrome, Linkedin, ArrowRight } from 'lucide-react';
+import { Globe, ExternalLink, ArrowRight } from 'lucide-react';
 import { Button } from '../components/button';
 import { Input } from '../components/input';
 
-export function Login() {
+export default function Login() {
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: ''
   });
-  const navigate = useNavigate();
-  
-  const handleSubmit = (e: React.FormEvent) => {
+  const router = useRouter();
+
+  const handleSubmit = (e: { preventDefault(): void }) => {
     e.preventDefault();
     // Mock authentication
-    navigate('/dashboard');
+    router.push('/dashboard');
   };
-  
+
   const handleOAuthLogin = (provider: string) => {
     // Mock OAuth
     alert(`${provider} login would be implemented here`);
-    navigate('/dashboard');
+    router.push('/dashboard');
   };
-  
+
   return (
     <div className="min-h-screen relative overflow-hidden flex items-center justify-center p-4">
       {/* Background */}
@@ -34,9 +37,9 @@ export function Login() {
         <div className="absolute top-0 left-0 w-96 h-96 bg-[#D4AF37] rounded-full blur-3xl" />
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#00629B] rounded-full blur-3xl" />
       </div>
-      
+
       {/* Logo */}
-      <Link to="/" className="absolute top-8 left-8 flex items-center gap-3 group">
+      <Link href="/" className="absolute top-8 left-8 flex items-center gap-3 group">
         <div className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-xl flex items-center justify-center border border-white/20 group-hover:bg-white/20 transition-colors">
           <span className="text-white font-bold text-xl">IEEE</span>
         </div>
@@ -45,7 +48,7 @@ export function Login() {
           <div className="text-xs text-[#D4AF37]">Student Branch</div>
         </div>
       </Link>
-      
+
       {/* Auth Card */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -58,8 +61,8 @@ export function Login() {
             <button
               onClick={() => setIsLogin(true)}
               className={`flex-1 py-2 rounded-lg font-medium transition-all ${
-                isLogin 
-                  ? 'bg-white text-[#00629B] shadow-lg' 
+                isLogin
+                  ? 'bg-white text-[#00629B] shadow-lg'
                   : 'text-white/70 hover:text-white'
               }`}
             >
@@ -68,45 +71,44 @@ export function Login() {
             <button
               onClick={() => setIsLogin(false)}
               className={`flex-1 py-2 rounded-lg font-medium transition-all ${
-                !isLogin 
-                  ? 'bg-white text-[#00629B] shadow-lg' 
+                !isLogin
+                  ? 'bg-white text-[#00629B] shadow-lg'
                   : 'text-white/70 hover:text-white'
               }`}
             >
               Register
             </button>
           </div>
-          
-          {/* Welcome Text */}
+
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-white mb-2">
               {isLogin ? 'Welcome Back' : 'Join IEEE ZC'}
             </h2>
             <p className="text-white/70">
-              {isLogin 
-                ? 'Login to access your dashboard' 
+              {isLogin
+                ? 'Login to access your dashboard'
                 : 'Create an account to get started'}
             </p>
           </div>
-          
+
           {/* OAuth Buttons */}
           <div className="space-y-3 mb-6">
             <button
               onClick={() => handleOAuthLogin('Google')}
               className="w-full flex items-center justify-center gap-3 px-6 py-3 bg-white hover:bg-gray-50 rounded-xl font-medium text-gray-700 transition-all duration-200 hover:scale-105"
             >
-              <Chrome className="w-5 h-5" />
+              <Globe className="w-5 h-5" />
               Continue with Google
             </button>
             <button
               onClick={() => handleOAuthLogin('LinkedIn')}
               className="w-full flex items-center justify-center gap-3 px-6 py-3 bg-[#0A66C2] hover:bg-[#004182] rounded-xl font-medium text-white transition-all duration-200 hover:scale-105"
             >
-              <Linkedin className="w-5 h-5" />
+              <ExternalLink className="w-5 h-5" />
               Continue with LinkedIn
             </button>
           </div>
-          
+
           {/* Divider */}
           <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
@@ -116,38 +118,44 @@ export function Login() {
               <span className="px-4 bg-transparent text-white/70">Or continue with email</span>
             </div>
           </div>
-          
+
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
             {!isLogin && (
+              <div className="space-y-1">
+                <label className="text-sm font-medium text-white/80">Full Name</label>
+                <Input
+                  type="text"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  required
+                  className="bg-white/90"
+                />
+              </div>
+            )}
+
+            <div className="space-y-1">
+              <label className="text-sm font-medium text-white/80">Email Address</label>
               <Input
-                label="Full Name"
-                type="text"
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                type="email"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 required
                 className="bg-white/90"
               />
-            )}
-            
-            <Input
-              label="Email Address"
-              type="email"
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              required
-              className="bg-white/90"
-            />
-            
-            <Input
-              label="Password"
-              type="password"
-              value={formData.password}
-              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-              required
-              className="bg-white/90"
-            />
-            
+            </div>
+
+            <div className="space-y-1">
+              <label className="text-sm font-medium text-white/80">Password</label>
+              <Input
+                type="password"
+                value={formData.password}
+                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                required
+                className="bg-white/90"
+              />
+            </div>
+
             {isLogin && (
               <div className="flex items-center justify-between text-sm">
                 <label className="flex items-center gap-2 text-white/70 cursor-pointer">
@@ -159,13 +167,13 @@ export function Login() {
                 </a>
               </div>
             )}
-            
+
             <Button type="submit" variant="secondary" size="lg" className="w-full mt-6">
               {isLogin ? 'Sign In' : 'Create Account'}
               <ArrowRight className="w-5 h-5" />
             </Button>
           </form>
-          
+
           {/* Terms */}
           {!isLogin && (
             <p className="text-xs text-white/60 text-center mt-4">
@@ -176,10 +184,10 @@ export function Login() {
             </p>
           )}
         </div>
-        
+
         {/* Back to Home */}
         <div className="text-center mt-6">
-          <Link to="/" className="text-white/70 hover:text-white transition-colors text-sm">
+          <Link href="/" className="text-white/70 hover:text-white transition-colors text-sm">
             ← Back to Home
           </Link>
         </div>
