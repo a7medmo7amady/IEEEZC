@@ -49,11 +49,10 @@ export default function Login() {
         </div>
       </Link>
 
-      {/* Auth Card */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="relative z-10 w-full max-w-md"
+        className="relative z-10 w-full max-w-md mx-auto"
       >
         <Card>
           {/* Toggle */}
@@ -162,7 +161,7 @@ export default function Login() {
               </div>
             )}
 
-            <Button type="submit" size="lg" className="w-full mt-6">
+            <Button type="submit" variant="gold" size="lg" className="w-full mt-6">
               {isLogin ? 'Sign In' : 'Create Account'}
               <ArrowRight className="w-5 h-5" />
             </Button>
