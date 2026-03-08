@@ -5,7 +5,9 @@
   --foreground: #212121;
 
   --ieee-blue: #00629B;
+  --ieee-blue-hover: #004d7a;
   --zc-gold: #D4AF37;
+  --zc-gold-hover: #b8971f;
   --charcoal: #212121;
 }
 
@@ -16,7 +18,9 @@
   --font-mono: var(--font-geist-mono);
 
   --color-ieee-blue: var(--ieee-blue);
+  --color-ieee-blue-hover: var(--ieee-blue-hover);
   --color-zc-gold: var(--zc-gold);
+  --color-zc-gold-hover: var(--zc-gold-hover);
   --color-charcoal: var(--charcoal);
 }
 
